@@ -6,7 +6,7 @@ jobs:
   test-matrix:
     strategy:
       matrix:
-        arduino-platform: ["arduino:samd", "arduino:avr"]
+        arduino-platform: ["arduino:avr"]
         include:
           - arduino-platform: "arduino:avr"
             fqbn: "arduino:avr:uno"
