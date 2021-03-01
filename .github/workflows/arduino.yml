@@ -1,22 +1,5 @@
-
-James Bruton’s 512 LED DJ helmet adds more glow to his Performance Robots show
-
-The Science Kit is now available in Italian and Spanish
-
-BLOG HOME
-Arduino on GitHub Actions
-ARDUINO TEAM — November 14th, 2019
-This post is from Massimiliano Pippi, Senior Software Engineer at Arduino.
-
-
-GitHub Actions is the name of the SDLC (Software Development Life Cycle) system introduced by GitHub about a year ago, currently in public beta and now approaching the general availability status. When you read SDLC, think about some sort of CI/CD system that’s generic enough to let you define a sequence of operations not necessarily limited to build, test, and deploy code: GitHub Actions can help you automate processes in code reviews, issue triaging, and repository management.
-
-GitHub Actions have been part of the tools we use at Arduino for a while now; helping us solve a wide range of problems from automating workflows within our backend infrastructure to managing the release process of our open source software. In the spirit of giving back to the community, we started publishing some of the Actions we developed internally so that they can be used right ahead from any GitHub account that’s been granted access to the public beta of GitHub Actions, and eventually in any GitHub repository.
-
-Our Actions are available from this repository and there’s one in particular we think the Arduino community will be happy to have – it’s called setup-arduino-cli and under the hood it takes all the steps necessary to have the `arduino-cli` binary available in a Workflow.  This means that in any step of your Workflow you can leverage the long list of features of the Arduino CLI.
-
 # This is the name of the workflow, visible on GitHub UI.
-name: test
+name: arduino
  
 # Here we tell GitHub to run the workflow when a commit
 # is pushed or a Pull Request is opened.
