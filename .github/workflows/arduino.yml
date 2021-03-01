@@ -1,2 +1,2 @@
-- name: Setup Arduino CLI
+  name: Setup Arduino CLI
   uses: arduino/setup-arduino-cli@v1.1.1
