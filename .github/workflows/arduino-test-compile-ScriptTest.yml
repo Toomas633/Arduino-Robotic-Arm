@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest 
 
     env:
-      REQUIRED_LIBRARIES: Servo, SoftwareSerial
+      REQUIRED_LIBRARIES: Servo
 
     strategy:
       matrix:
