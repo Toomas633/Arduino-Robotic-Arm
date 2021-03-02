@@ -25,8 +25,5 @@ jobs:
           arduino-cli core update-index
           arduino-cli core install ${{ matrix.arduino-platform }}
  
-      - uses: arduino-cli compile --fqbn ${{ matrix.fqbn }} ./blink
-        with:
-          fqbn: 'arduino:avr:uno'
-          libraries: |
-            - name: Servo
+      - name: Compile Sketch
+        run: arduino-cli compile --fqbn ${{ matrix.arduino:avr:uno }} ./blink
