@@ -53,4 +53,4 @@ jobs:
           sketches-exclude: ${{ matrix.sketches-exclude }}
           build-properties: ${{ toJson(matrix.build-properties) }}
           sketch-names: ".ino"
-          sketch-names-find-start: .
+          sketch-names-find-start: ./
