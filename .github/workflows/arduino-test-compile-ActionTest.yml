@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      REQUIRED_LIBRARIES: Servo@1.1.5
+      REQUIRED_LIBRARIES: Servo@1.1.5, SoftwareSerial@1.0
       CLI_VERSION: latest
 
     strategy:
@@ -27,13 +27,8 @@ jobs:
 
         include:
           - arduino-boards-fqbn: arduino:avr:uno
-            sketches-exclude: 50Hz # Comma separated list of example names to exclude in build
-            build-properties:
-              WhistleSwitch:
-                -DDEBUG
-                -DFREQUENCY_RANGE_LOW
-              SimpleFrequencyDetector:
-                -DINFO
+            All:
+             -DDEBUG
 
       fail-fast: false
 
@@ -59,4 +54,4 @@ jobs:
           build-properties: ${{ toJson(matrix.build-properties) }}
           sketch-names:
             Arduino-Robotic_Arm.ino,
-          sketch-names-find-start: ./
+          sketch-names-find-start: test
