@@ -54,4 +54,4 @@ jobs:
           build-properties: ${{ toJson(matrix.build-properties) }}
           sketch-names:
             Arduino-Robotic_Arm.ino,
-          sketch-names-find-start: test
+          sketch-names-find-start: .
