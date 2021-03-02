@@ -26,11 +26,8 @@ jobs:
         include:
           - arduino-boards-fqbn: arduino:avr:uno
             build-properties:
-             WhistleSwitch:
-               -DDEBUG
-               -DFREQUENCY_RANGE_LOW
-             SimpleFrequencyDetector:
-              -DINFO
+              All:
+                -DDBUG
 
       fail-fast: false
 
