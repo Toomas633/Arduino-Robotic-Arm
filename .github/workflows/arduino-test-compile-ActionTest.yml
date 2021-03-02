@@ -1,0 +1,62 @@
+
+name: arduino-test-compile-ActionTest
+on:
+  push: 
+    paths:
+    - '**.ino'
+    - '**.cpp'
+    - '**.h'
+    - 'arduino-test-compile.sh'
+    - 'action.yml'
+    - '**arduino-test-compile-ActionTest.yml'
+
+jobs:
+  build:
+    name: ${{ matrix.arduino-boards-fqbn }} - test compiling examples
+
+    runs-on: ubuntu-latest
+
+    env:
+      REQUIRED_LIBRARIES: Servo@1.1.5
+      CLI_VERSION: latest
+
+    strategy:
+      matrix:
+        arduino-boards-fqbn:
+          - arduino:avr:uno
+
+        include:
+          - arduino-boards-fqbn: arduino:avr:uno
+            sketches-exclude: 50Hz # Comma separated list of example names to exclude in build
+            build-properties:
+              WhistleSwitch:
+                -DDEBUG
+                -DFREQUENCY_RANGE_LOW
+              SimpleFrequencyDetector:
+                -DINFO
+
+      fail-fast: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Checkout custom library
+        uses: actions/checkout@v2
+        with:
+          repository: ArminJo/ATtinySerialOut
+          ref: master
+          path: CustomLibrary
+
+      - name: Compile all examples using the arduino-test-compile action
+        uses: ArminJo/arduino-test-compile@master
+        with:
+          arduino-board-fqbn: ${{ matrix.arduino-boards-fqbn }}
+          arduino-platform: ${{ matrix.arduino-platform }}
+          platform-url: ${{ matrix.platform-url }}
+          required-libraries: ${{ env.REQUIRED_LIBRARIES }}
+          sketches-exclude: ${{ matrix.sketches-exclude }}
+          build-properties: ${{ toJson(matrix.build-properties) }}
+          sketch-names:
+            Arduino-Robotic_Arm.ino,
+          sketch-names-find-start: ./
