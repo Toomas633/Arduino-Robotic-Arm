@@ -52,6 +52,5 @@ jobs:
           required-libraries: ${{ env.REQUIRED_LIBRARIES }}
           sketches-exclude: ${{ matrix.sketches-exclude }}
           build-properties: ${{ toJson(matrix.build-properties) }}
-          sketch-names:
-            Arduino-Robotic_Arm.ino,
+          sketch-names: ".ino"
           sketch-names-find-start: .
