@@ -25,7 +25,6 @@ jobs:
           
         include:
           - arduino-boards-fqbn: arduino:avr:uno
-            sketches-exclude: 50Hz
             build-properties:
              WhistleSwitch:
                -DDEBUG
