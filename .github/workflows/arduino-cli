@@ -1,0 +1,37 @@
+name: arduino_cli
+ 
+on: [push, pull_request]
+ 
+jobs:
+  test-matrix:
+    strategy:
+      matrix:
+        arduino-platform: ["arduino:avr"]
+        include:
+          - arduino-platform: "arduino:avr"
+            fqbn: "arduino:avr:uno"
+
+    runs-on: windows-latest
+ 
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Setup Arduino CLI
+        uses: arduino/setup-arduino-cli@v1.1.1
+ 
+      - name: Install platform
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install ${{ matrix.arduino-platform }}
+ 
+      - uses: arduino/actions/libraries/compile-examples@master
+        with:
+          fqbn: 'arduino:avr:uno'
+          libraries: |
+            - name: Servo
+            - name: Stepper
+              version: 1.1.
+  
+      - name: Compile Sketch
+        run: arduino-cli compile --fqbn ${{ matrix.fqbn }} ./blink
