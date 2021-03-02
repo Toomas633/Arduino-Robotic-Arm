@@ -1,29 +1,65 @@
-name: arduino_cli
- 
-on: [push, pull_request]
- 
+
+name: arduino-test-compile-ScriptTest
+on:
+  push: 
+    paths:
+    - '**.ino'
+    - '**.cpp'
+    - '**.h'
+    - 'arduino-test-compile.sh'
+    - '**arduino-test-compile-ScriptTest.yml'
+
 jobs:
-  test-matrix:
+  build:
+    name: ${{ matrix.arduino-boards-fqbn }} - test compiling examples
+
+    runs-on: ubuntu-latest 
+
+    env:
+      REQUIRED_LIBRARIES: Servo@1.1.5
+
     strategy:
       matrix:
-        arduino-platform: ["arduino:avr"]
+        arduino-boards-fqbn:
+          - arduino:avr:uno
+          
         include:
-          - arduino-platform: "arduino:avr"
-            fqbn: "arduino:avr:uno"
+          - arduino-boards-fqbn: arduino:avr:uno
+            sketches-exclude: 50Hz
+            build-properties:
+             WhistleSwitch:
+               -DDEBUG
+               -DFREQUENCY_RANGE_LOW
+             SimpleFrequencyDetector:
+              -DINFO
 
-    runs-on: ubuntu-latest
- 
+      fail-fast: false
+
     steps:
       - name: Checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
 
-      - name: Setup Arduino CLI
-        uses: arduino/setup-arduino-cli@v1.1.1
- 
-      - name: Install platform
+      - name: Checkout custom library
+        uses: actions/checkout@v2
+        with:
+          repository: ArminJo/ATtinySerialOut
+          ref: master
+          path: CustomLibrary
+
+      - name: Compile all examples using the bash script arduino-test-compile.sh
+        env:
+          ENV_ARDUINO_BOARD_FQBN: ${{ matrix.arduino-boards-fqbn }}
+          ENV_PLATFORM_URL: ${{ matrix.platform-url }}
+          ENV_REQUIRED_LIBRARIES: ${{ env.REQUIRED_LIBRARIES }}
+          ENV_SKETCHES_EXCLUDE: ${{ matrix.sketches-exclude }}
+          ENV_BUILD_PROPERTIES: ${{ toJson(matrix.build-properties) }}
+          ENV_SKETCH_NAMES: "*.ino"
+          ENV_SKETCH_NAMES_FIND_START: .
+          ENV_SAVE_GENERATED_FILES: true
+          ENV_DEBUG_COMPILE: true
+          ENV_DEBUG_INSTALL: true
         run: |
-          arduino-cli core update-index
-          arduino-cli core install ${{ matrix.arduino-platform }}
- 
-      - name: Compile Sketch
-        run: arduino-cli compile --fqbn ${{ matrix.arduino:avr:uno }} ./blink
+          wget --quiet https://raw.githubusercontent.com/ArminJo/arduino-test-compile/master/arduino-test-compile.sh
+            ls -l arduino-test-compile.sh
+            chmod +x arduino-test-compile.sh
+            ./arduino-test-compile.sh
