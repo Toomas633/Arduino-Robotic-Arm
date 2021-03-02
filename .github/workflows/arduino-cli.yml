@@ -30,8 +30,6 @@ jobs:
           fqbn: 'arduino:avr:uno'
           libraries: |
             - name: Servo
-            - name: Stepper
-              version: 1.1.
   
       - name: Compile Sketch
         run: arduino-cli compile --fqbn ${{ matrix.fqbn }} ./blink
