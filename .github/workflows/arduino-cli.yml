@@ -25,7 +25,7 @@ jobs:
           arduino-cli core update-index
           arduino-cli core install ${{ matrix.arduino-platform }}
  
-      - uses: arduino/actions/libraries/compile-examples@master
+      - uses: arduino/actions/libraries/compile-./@master
         with:
           fqbn: 'arduino:avr:uno'
           libraries: |
