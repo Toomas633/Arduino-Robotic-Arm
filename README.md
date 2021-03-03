@@ -1,4 +1,4 @@
-# Arduino-Robotic-Arm
+# Arduino Robotic Arm
 Arduino Uno robotic arm using joystick input
 Had some spare servos and salvaged a broken controller for joysticks, decided to make a robotic arm. Had to put some spare metal to the base for extra heft so it won't tip over so easily. Going to replace the sg90 servos with metal gearbox ones soon, big ones already are. This is also the first project i have coded completly by myself. Joysticks cahnge the servo position values so they hold position and won't come back when you let go.
 
