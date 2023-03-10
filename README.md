@@ -19,4 +19,5 @@ More options on https://toomas633.com/donate.html
 
 ## Licences
 Model files: CERN Open Hardware Licence Version 2 - Strongly Reciprocal
+
 Code files: GNU General Public License v3 (GPL-3)
