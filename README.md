@@ -11,11 +11,7 @@ The reset button doesn't need a pullup resistor on it's lines (configured to use
 Serial monitor also displays all the button and servo states in a table.
 
 ## Donate
-Monero: `46b9jWCbtfDEGibADKG5uqL12r8RDohm1ZjkSK2ZW3T3gTsUYSPGpvu5fvhJZjuBGRbN8HnKWc8T6RFvzuUxTQjFF5osdeP`
-
-Bitcoin: `3NPFV9ivECdSgyCXeNk4h5Gm3q1xiDRnPV`
-
-More options on https://toomas633.com/donate/
+[toomas633.com/donate](https://toomas633.com/donate/)
 
 ## Licences
 Model files: CERN Open Hardware Licence Version 2 - Strongly Reciprocal
