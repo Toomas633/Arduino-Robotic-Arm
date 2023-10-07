@@ -1,4 +1,5 @@
 {
     "sketch": "Arduino-Robotic-Arm.ino",
-    "board": "arduino:avr:uno"
+    "board": "arduino:avr:uno",
+    "port": "/dev/ttyUSB0"
 }
