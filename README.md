@@ -1,3 +1,5 @@
+<img align="right" src="https://sonarcloud.io/api/project_badges/quality_gate?project=Toomas633_Arduino-Robotic-Arm">
+
 # Arduino Robotic Arm
 - [Arduino Robotic Arm](#arduino-robotic-arm)
   * [About:](#about)
