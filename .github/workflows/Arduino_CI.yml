@@ -20,8 +20,6 @@ jobs:
 
       - name: Set up Arduino
         uses: arduino/setup-arduino-cli@v1
-        with:
-          version: 'latest'
 
       - name: Clone USB Host Shield 2.0 library from GitHub
         run: |
@@ -34,7 +32,7 @@ jobs:
 
       - name: Build and Test
         run: |
-          arduino-cli compile --fqbn arduino:avr:uno . > build.log
+          arduino-cli compile --fqbn arduino:avr:uno . > test_results.txt
         env:
           ARDUINO_BOARD: 'arduino:avr:uno'
 
@@ -46,4 +44,4 @@ jobs:
           curl -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
           -H "Accept: application/vnd.github.v3+json" \
           "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/${{ github.event.pull_request.number }}/comments" \
-          -d '{"body": "Arduino CI results:\n```' && cat build.log && echo '```"}'
+          -d '{"body": "Arduino CI results:\n```' && cat test_results.txt && echo '```"}'
