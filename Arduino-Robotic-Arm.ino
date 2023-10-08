@@ -1,8 +1,14 @@
 // Made by Toomas633
 // Still in progress project, code updates can be found in github: https://github.com/Toomas633/Arduino-Robotic-Arm
-// Reddit thread: https://www.reddit.com/r/arduino/comments/lv9i9n/my_first_ever_arduino_uno_powered_project/?utm_source=share&utm_medium=web2x&context=3
 
 #include <Servo.h>
+#include <usbhid.h>
+#include <usbhub.h>
+#include <XBOXONE.h>
+
+USB Usb;
+USBHub Hub(&Usb);
+XBOXONE Xb1(&Usb);
 
 Servo servo01;
 Servo servo02;
@@ -31,6 +37,12 @@ int ResetButtonState = 0;
 void setup()
 {
   Serial.begin(9600);
+
+  if (Usb.Init() == -1) {
+    Serial.println("USB initialization failed.");
+    while(1);
+  }
+
   Serial.println("<Auto homing>");
 
   // Pins to where you connect servos, change here if needed, no need further on.
@@ -220,5 +232,23 @@ void grapple_servo()
   {
     servo06.write(180);
     delay(20);
+  }
+}
+
+//============================= Read controller ========================================
+void read_controller() {
+  Usb.Task();
+  if (Xb1.XboxOneConnected) {
+    int leftX = Xb1.getAnalogHat(LeftHatX);
+    int leftY = Xb1.getAnalogHat(LeftHatY);
+    int rightX = Xb1.getAnalogHat(RightHatX);
+    int rightY = Xb1.getAnalogHat(RightHatY);
+
+    if (Xb1.getButtonClick(A)) {
+      Serial.println("A button pressed.");
+    }
+    if (Xb1.getButtonPress(B)) {
+      Serial.println("B button pressed.");
+    }
   }
 }
