@@ -38,6 +38,7 @@ jobs:
         working-directory: ${{ github.workspace }}
 
       - name: Change Working Directory
+        if: always()
         run: ls && cd build && ls
 
       - name: Comment on Pull Request
