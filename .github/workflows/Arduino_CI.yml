@@ -39,15 +39,16 @@ jobs:
 
       - name: Comment on Pull Request
         if: always()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          const fs = require('fs');
-          const result = fs.readFileSync('Arduino-Robotic-Arm.ino.build.log', 'utf8');
-          const { context } = github;
-          github.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: 'Arduino Build Results:\n```\n' + result + '\n```'
-          });
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const result = fs.readFileSync('Arduino-Robotic-Arm.ino.build.log', 'utf8');
+            const { context } = github;
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Arduino Build Results:\n```\n' + result + '\n```'
+            });
