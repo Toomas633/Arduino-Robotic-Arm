@@ -21,10 +21,13 @@ jobs:
       - name: Set up Arduino
         uses: arduino/setup-arduino-cli@v1
 
+      - name: Clone USB Host Shield 2.0 library from GitHub
+        run: |
+          git clone https://github.com/felis/USB_Host_Shield_2.0.git ~/Arduino/libraries/USB_Host_Shield_2.0
+
       - name: Install Arduino Libraries
         run: |
           arduino-cli lib install servo
-          arduino-cli lib install 'USB Host Shield 2.0'
 
       - name: Build and Test
         run: |
