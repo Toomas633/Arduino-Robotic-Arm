@@ -45,7 +45,6 @@ jobs:
           script: |
             const fs = require('fs');
             const result = fs.readFileSync('Arduino-Robotic-Arm.ino.build.log', 'utf8');
-            const { context } = github;
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
