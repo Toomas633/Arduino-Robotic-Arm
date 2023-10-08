@@ -1,0 +1,33 @@
+name: Arduino CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Arduino
+        uses: arduino/setup-arduino-cli@v1
+
+      - name: Clone USB Host Shield 2.0 library from GitHub
+        run: |
+          git clone https://github.com/felis/USB_Host_Shield_2.0.git ~/Arduino/libraries/USB_Host_Shield_2.0
+
+      - name: Install Arduino Libraries
+        run: |
+          arduino-cli lib install servo
+          arduino-cli core install arduino:avr
+
+      - name: Build and Test
+        run: |
+          arduino-cli compile --fqbn arduino:avr:uno . > build.log
+        env:
+          ARDUINO_BOARD: 'arduino:avr:uno'
+        working-directory: ${{ github.workspace }}
