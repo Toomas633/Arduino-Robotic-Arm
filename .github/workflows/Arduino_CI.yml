@@ -24,9 +24,7 @@ jobs:
       - name: Install Arduino Libraries
         run: |
           arduino-cli lib install servo
-          arduino-cli lib install USB_Host_Shield_20
-        env:
-          ARDUINO_LIBS: 'servo USB_Host_Shield_20'    
+          arduino-cli lib install USB_Host_Shield_2.0
 
       - name: Build and Test
         run: |
