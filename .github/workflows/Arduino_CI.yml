@@ -4,11 +4,6 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch:
-    inputs:
-      target-branch:
-        description: 'Target Branch'
-        required: true
 
 jobs:
   build:
@@ -36,18 +31,3 @@ jobs:
         env:
           ARDUINO_BOARD: 'arduino:avr:uno'
         working-directory: ${{ github.workspace }}
-
-      - name: Comment on Pull Request
-        if: always()
-        uses: actions/github-script@v6
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const fs = require('fs');
-            const result = fs.readFileSync('build.log', 'utf8');
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'Arduino Build Results:\n```\n' + result + '\n```'
-            });
