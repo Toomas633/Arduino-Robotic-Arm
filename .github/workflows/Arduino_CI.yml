@@ -37,10 +37,6 @@ jobs:
           ARDUINO_BOARD: 'arduino:avr:uno'
         working-directory: ${{ github.workspace }}
 
-      - name: Change Working Directory
-        if: always()
-        run: ls
-
       - name: Comment on Pull Request
         if: always()
         uses: actions/github-script@v6
@@ -48,7 +44,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
-            const result = fs.readFileSync('Arduino-Robotic-Arm.ino.build.log', 'utf8');
+            const result = fs.readFileSync('build.log', 'utf8');
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
