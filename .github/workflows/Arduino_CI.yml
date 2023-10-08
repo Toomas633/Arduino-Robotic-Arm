@@ -28,6 +28,7 @@ jobs:
       - name: Install Arduino Libraries
         run: |
           arduino-cli lib install servo
+          arduino-cli core install arduino:avr
 
       - name: Build and Test
         run: |
