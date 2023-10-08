@@ -32,16 +32,22 @@ jobs:
 
       - name: Build and Test
         run: |
-          arduino-cli compile --fqbn arduino:avr:uno . > test_results.txt
+          arduino-cli compile --fqbn arduino:avr:uno .
         env:
           ARDUINO_BOARD: 'arduino:avr:uno'
+        working-directory: ${{ github.workspace }}
 
       - name: Comment on Pull Request
         if: always()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          curl -X POST -H "Authorization: Bearer $GITHUB_TOKEN" \
-          -H "Accept: application/vnd.github.v3+json" \
-          "https://api.github.com/repos/${GITHUB_REPOSITORY}/issues/${{ github.event.pull_request.number }}/comments" \
-          -d '{"body": "Arduino CI results:\n```' && cat test_results.txt && echo '```"}'
+          const fs = require('fs');
+          const result = fs.readFileSync('Arduino-Robotic-Arm.ino.build.log', 'utf8');
+          const { context } = github;
+          github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: 'Arduino Build Results:\n```\n' + result + '\n```'
+          });
