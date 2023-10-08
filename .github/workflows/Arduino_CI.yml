@@ -37,6 +37,9 @@ jobs:
           ARDUINO_BOARD: 'arduino:avr:uno'
         working-directory: ${{ github.workspace }}
 
+      - name: Change Working Directory
+        run: ls && cd build && ls
+
       - name: Comment on Pull Request
         if: always()
         uses: actions/github-script@v6
