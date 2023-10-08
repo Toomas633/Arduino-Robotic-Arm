@@ -4,6 +4,11 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      target-branch:
+        description: 'Target Branch'
+        required: true
 
 jobs:
   build:
