@@ -32,14 +32,14 @@ jobs:
 
       - name: Build and Test
         run: |
-          arduino-cli compile --fqbn arduino:avr:uno .
+          arduino-cli compile --fqbn arduino:avr:uno . > build.log
         env:
           ARDUINO_BOARD: 'arduino:avr:uno'
         working-directory: ${{ github.workspace }}
 
       - name: Change Working Directory
         if: always()
-        run: ls && cd build && ls
+        run: ls
 
       - name: Comment on Pull Request
         if: always()
