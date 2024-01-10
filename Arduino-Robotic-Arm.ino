@@ -35,12 +35,14 @@ int initial_position1 = 75;
 int initial_position2 = 175;
 int initial_position3 = 175;
 int initial_position4 = 90;
-int initial_position5 = 0;
+int initial_position5 = 50;
 int initial_position6 = 180;
+
+// Servo sensitivity, how fast they move
+int sen = 5;
 
 void setup()
 {
-  Serial.begin(115200);
   if (Usb.Init() == -1)
   {
     while (1)
@@ -60,6 +62,12 @@ void setup()
   servo03.write(initial_position3);
   servo04.write(initial_position4);
   servo05.write(initial_position5);
+
+  // Signal ready status
+  servo06.write(initial_position6);
+  delay(250);
+  servo06.write(100);
+  delay(250);
   servo06.write(initial_position6);
 }
 
@@ -148,22 +156,22 @@ void right_joystick(int x, int y)
 {
   if (x < 70)
   {
-    initial_position4 = constrain(initial_position4 - map(x, 70, 0, 0, 8), 5, 175);
+    initial_position4 = constrain(initial_position4 - map(x, 70, 0, 0, sen), 0, 180);
     servo04.write(initial_position4);
   }
   if (x > 130)
   {
-    initial_position4 = constrain(initial_position4 + map(x, 130, 200, 0, 8), 5, 175);
+    initial_position4 = constrain(initial_position4 + map(x, 130, 200, 0, sen), 0, 180);
     servo04.write(initial_position4);
   }
   if (y < 70)
   {
-    initial_position3 = constrain(initial_position3 - map(x, 70, 0, 0, 8), 5, 175);
+    initial_position3 = constrain(initial_position3 - map(x, 70, 0, 0, sen), 5, 175);
     servo03.write(initial_position3);
   }
   if (y > 130)
   {
-    initial_position3 = constrain(initial_position3 + map(x, 130, 200, 0, 8), 5, 175);
+    initial_position3 = constrain(initial_position3 + map(x, 130, 200, 0, sen), 5, 175);
     servo03.write(initial_position3);
   }
 }
@@ -173,22 +181,22 @@ void left_joystick(int x, int y)
 {
   if (x < 70)
   {
-    initial_position1 = constrain(initial_position1 + map(x, 70, 0, 0, 5), 10, 160);
+    initial_position1 = constrain(initial_position1 + map(x, 70, 0, 0, sen), 5, 175);
     servo01.write(initial_position1);
   }
   if (x > 120)
   {
-    initial_position1 = constrain(initial_position1 - map(x, 130, 200, 0, 5), 10, 160);
+    initial_position1 = constrain(initial_position1 - map(x, 130, 200, 0, sen), 5, 175);
     servo01.write(initial_position1);
   }
   if (y < 70)
   {
-    initial_position2 = constrain(initial_position2 - map(x, 70, 0, 0, 8), 5, 175);
+    initial_position2 = constrain(initial_position2 - map(x, 70, 0, 0, sen), 5, 175);
     servo02.write(initial_position2);
   }
   if (y > 130)
   {
-    initial_position2 = constrain(initial_position2 + map(x, 130, 200, 0, 8), 5, 175);
+    initial_position2 = constrain(initial_position2 + map(x, 130, 200, 0, sen), 5, 175);
     servo02.write(initial_position2);
   }
 }
@@ -198,12 +206,12 @@ void wrist_servo(int value)
 {
   if (value > 130)
   {
-    initial_position5 = constrain(initial_position5 + map(value, 130, 200, 0, 8), 5, 175);
+    initial_position5 = constrain(initial_position5 + map(value, 130, 200, 0, sen), 5, 175);
     servo05.write(initial_position5);
   }
   if (value < 70)
   {
-    initial_position5 = constrain(initial_position5 - map(value, 70, 0, 0, 8), 5, 175);
+    initial_position5 = constrain(initial_position5 - map(value, 70, 0, 0, sen), 5, 175);
     servo05.write(initial_position5);
   }
 }
@@ -215,11 +223,13 @@ void auto_home()
   initial_position2 = 175;
   initial_position3 = 175;
   initial_position4 = 90;
+  initial_position5 = 50;
   initial_position6 = 180;
   servo01.write(initial_position1);
   servo02.write(initial_position2);
   servo03.write(initial_position3);
   servo04.write(initial_position4);
+  servo05.write(initial_position5);
   servo06.write(initial_position6);
 }
 
@@ -228,7 +238,7 @@ void gripper_servo()
 {
   if (gripper)
   {
-    servo06.write(0);
+    servo06.write(100);
   }
   else
   {
