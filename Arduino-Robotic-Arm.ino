@@ -1,5 +1,4 @@
 // Made by Toomas633
-// Still in progress project, code updates can be found in github: https://github.com/Toomas633/Arduino-Robotic-Arm
 
 #include <Servo.h>
 #include <usbhid.h>
